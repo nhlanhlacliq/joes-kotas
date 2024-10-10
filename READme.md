@@ -3,8 +3,10 @@
 ## TODO
 
 - [x] Setup TailwindCSS and color variables
-- [ ] try setup dark mode
-- [ ] **Deploy (Vercel)**: Deploy frontend using Vercel.
+- [x] setup dark mode
+- [x] Deploy to vercel.
+- [x] set up register and login routes and views
+- [ ] set up register and login with api
 - [ ] **Scaffold basic UI with mock data**:
   - Use Vue 3 Composition API and TailwindCSS to design a basic interface for managing food items.
   - Set up state management with Pinia.
