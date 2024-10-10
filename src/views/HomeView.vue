@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import ButtonComponent from '../components/ui/buttonComponent.vue'
-
-function sayHello() {
-  alert('hello')
-}
+import MainContainer from '@/components/mainContainer.vue'
 </script>
 
 <template>
-  <main
-    class="bg-background text-foregound w-full h-screen flex flex-col justify-center items-center"
-  >
+  <MainContainer>
     <div class="flex flex-col gap-6 items-center">
       <h1 class="text-4xl font-bold text-foreground">Welcome to Joe's Kotas 🍞</h1>
       <p class="text-xl text-foreground/50 text-balance">
         The ultimate dashboard for managing your inventory
       </p>
-      <div>
-        <ButtonComponent variant="outline" @click="sayHello">Welcome</ButtonComponent>
+      <div class="flex gap-6 justify-center">
+        <router-link to="/register">
+          <ButtonComponent variant="outline" class="w-32"> Sign up </ButtonComponent>
+        </router-link>
+        <router-link to="/login">
+          <ButtonComponent class="w-32"> Login </ButtonComponent>
+        </router-link>
       </div>
     </div>
-  </main>
+  </MainContainer>
 </template>
