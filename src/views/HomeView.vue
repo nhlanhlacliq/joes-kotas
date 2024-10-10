@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import ButtonComponent from '../components/ui/buttonComponent.vue'
 import MainContainer from '@/components/mainContainer.vue'
+import ButtonComponent from '../components/ui/buttonComponent.vue'
 </script>
 
 <template>
   <MainContainer>
     <div class="flex flex-col gap-6 items-center">
-      <h1 class="text-4xl font-bold text-foreground">Welcome to Joe's Kotas 🍞</h1>
+      <h1 class="text-4xl font-bold text-foreground">Welcome to Joe's Kota's 🍞</h1>
       <p class="text-xl text-foreground/50 text-balance">
         The ultimate dashboard for managing your inventory
       </p>

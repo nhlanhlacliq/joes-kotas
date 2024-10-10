@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import ButtonComponent from '../components/ui/buttonComponent.vue'
-import MainContainer from '@/components/mainContainer.vue'
 </script>
 
 <template>
-  <MainContainer>
-    <h1 class="text-4xl font-bold text-foreground">Joe's Kotas Dashboard 🍞</h1>
-    <router-link to="/">
-      <ButtonComponent class="w-32"> Logout </ButtonComponent>
-    </router-link>
-  </MainContainer>
+  <main class="g-background text-foregound w-full h-screen flex flex-col p-6">
+    <div class="flex justify-between w-full">
+      <!-- Header -->
+      <h1 class="text-3xl font-bold text-foreground">Dashboard 🍞</h1>
+      <router-link to="/">
+        <ButtonComponent class="w-32"> Logout </ButtonComponent>
+      </router-link>
+    </div>
+  </main>
 </template>
