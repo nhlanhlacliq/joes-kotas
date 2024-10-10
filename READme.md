@@ -2,6 +2,8 @@
 
 ## TODO
 
+- [x] Setup TailwindCSS and color variables
+- [ ] try setup dark mode
 - [ ] **Deploy (Vercel)**: Deploy frontend using Vercel.
 - [ ] **Scaffold basic UI with mock data**:
   - Use Vue 3 Composition API and TailwindCSS to design a basic interface for managing food items.
