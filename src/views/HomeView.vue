@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import ButtonComponent from '../components/ui/buttonComponent.vue'
+
+function sayHello() {
+  alert('hello')
+}
 </script>
 
 <template>
@@ -12,7 +16,7 @@ import ButtonComponent from '../components/ui/buttonComponent.vue'
         The ultimate dashboard for managing your inventory
       </p>
       <div>
-        <ButtonComponent variant="outline">Welcome</ButtonComponent>
+        <ButtonComponent variant="outline" @click="sayHello">Welcome</ButtonComponent>
       </div>
     </div>
   </main>
