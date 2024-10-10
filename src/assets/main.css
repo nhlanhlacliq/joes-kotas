@@ -44,3 +44,28 @@
     --border: 12 6.5% 15.1%;
   }
 }
+
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: 0.5s ease all;
+}
+
+.dark-enter-from,
+.dark-leave-to {
+  /* opacity: 0; */
+  background-color: black;
+  transform: scale(1.03);
+  filter: blur(10px);
+  overflow: hidden;
+}
+
+.dark-enter-active,
+.dark-leave-active {
+  transition: 0.4s ease all;
+}
