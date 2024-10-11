@@ -4,9 +4,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-
 export const useAuthStore = defineStore('auth', () => {
+  const router = useRouter()
   const token = ref<string | null>(null)
 
   // Register
