@@ -1,16 +1,16 @@
 import axios from '@/api/axios'
-import type { InventoryItemInputSchema } from '@/schemas/inventory'
+import type { InventoryItemInputSchema, InventoryItemSchema } from '@/schemas/inventory'
 
 export const fetchInventory = async () => {
-  return await axios.get('/inventory')
+  return await axios.get<InventoryItemSchema[]>('/inventory')
 }
 
 export const createInventoryItem = async (item: InventoryItemInputSchema) => {
-  return await axios.post('/inventory', item)
+  return await axios.post<InventoryItemInputSchema>('/inventory', item)
 }
 
 export const updateInventoryItem = async (id: number, item: InventoryItemInputSchema) => {
-  return await axios.put(`/inventory/${id}`, item)
+  return await axios.put<InventoryItemInputSchema>(`/inventory/${id}`, item)
 }
 
 export const deleteInventoryItem = async (id: number) => {
