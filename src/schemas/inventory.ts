@@ -8,6 +8,7 @@ export const inventoryItemCompleteSchema = z.object({
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime()
 })
+export type InventoryItemSchema = z.infer<typeof inventoryItemCompleteSchema>
 
 const inventoryItemInputSchema = inventoryItemCompleteSchema.omit({
   id: true,
