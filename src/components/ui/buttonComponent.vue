@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { defineProps, computed } from 'vue'
+import { computed, defineProps } from 'vue'
 
 const props = defineProps({
   variant: {
-    type: String as () => 'default' | 'destructive' | 'outline',
+    type: String as () => 'default' | 'destructive' | 'outline' | 'dark',
     default: 'default'
+  },
+  class: {
+    type: String,
+    default: ''
   }
 })
 const emit = defineEmits(['click'])
@@ -19,11 +23,12 @@ const classes = computed(() => {
 
   const variantClasses = {
     default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+    dark: 'bg-foreground text-background hover:bg-foreground/90',
     destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
     outline: 'border border-border bg-background text-foreground hover:bg-background/90'
   }
 
-  return `${baseClasses} ${variantClasses[props.variant]}`
+  return `${baseClasses} ${variantClasses[props.variant]} ${props.class}`
 })
 </script>
 
