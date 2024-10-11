@@ -5,7 +5,8 @@ export function timeAgo(date: string) {
 
   const timeAgoInMs = new Date().getTime() - inputDate.getTime()
 
-  const minsAgo = Math.floor(timeAgoInMs / (1000 * 60)) - inputDate.getTimezoneOffset()
+  // const minsAgo = Math.floor(timeAgoInMs / (1000 * 60)) - inputDate.getTimezoneOffset()
+  const minsAgo = Math.floor(timeAgoInMs / (1000 * 60))
   if (minsAgo < 60) {
     return `${minsAgo} minute(s) ago`
   }
