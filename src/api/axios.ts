@@ -23,7 +23,7 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     const authStore = useAuthStore()
-    // Log user out and route to /login if any response is unauthorized
+    // If any response is unauthorized - Log user out and route to /
     if (error.response && error.response.status === 401) {
       authStore.logout()
       router.push('/')
