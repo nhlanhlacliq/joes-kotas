@@ -1,5 +1,5 @@
 // Returns a string representing how long ago the input date was.
-export function timeAgo(date: Date) {
+export function timeAgo(date: string) {
   if (!date) return
   const inputDate = new Date(date)
 
