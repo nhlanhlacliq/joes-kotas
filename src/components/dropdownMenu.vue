@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
+import { nextTick, ref } from 'vue'
 
 const isVisible = ref(false)
 
@@ -47,14 +48,13 @@ function handleClickOutside() {
     isVisible.value = false
   }
 }
-
-onMounted(() => {
-  window.addEventListener('click', handleClickOutside)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('click', handleClickOutside)
-})
+onClickOutside(menu, handleClickOutside)
+// onMounted(() => {
+//   window.addEventListener('click', handleClickOutside)
+// })
+// onUnmounted(() => {
+//   window.removeEventListener('click', handleClickOutside)
+// })
 </script>
 
 <template>
