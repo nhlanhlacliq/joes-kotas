@@ -10,12 +10,17 @@
 - [x] set up user auth state/store w pinia
 - [x] setup axios (w/ interceptors) ([docs](https://axios-http.com/docs/interceptors))
 - [ ] handle errors
+- [ ] handle network error response on dashboard when token expired
 - [ ] bonus: fetch current user endpoint
 - [ ] bonus: fetch all users
 - [ ] bonus: update / endpoint on server to redirect to /reference
+- [ ] bonus: fetch items only created by current user - create user roles - admin role that fetches all
 - [x] type schemas for api calls
-- [x] set up register and login with api
-- [ ]
+- [x] implement register and login with api
+- [x] implement inventory fetch and display
+- [ ] implement inventory add
+- [ ] implement inventory update
+- [ ] implement inventory delete
 
 ---
 
