@@ -21,6 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
     console.log('logging in...')
     const response = await loginService(credentials)
     token.value = response.data.token
+    localStorage.removeItem('token')
     console.log(token.value)
     localStorage.setItem('token', token.value as string)
   }
