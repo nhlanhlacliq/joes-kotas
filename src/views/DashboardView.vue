@@ -1,6 +1,8 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
 import LoadingComponent from '@/components/loadingComponent.vue'
+import NewInventoryItemForm from '@/components/newInventoryItemForm.vue'
+import SheetComponent from '@/components/sheetComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
 import { timeAgo } from '@/lib/utils'
@@ -15,6 +17,7 @@ import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import DropdownMenu from '../components/dropdownMenu.vue'
+import DropdownMenuItem from '../components/drowdownMenuItem.vue'
 import Sidebar from '../components/sideBar.vue'
 import Button from '../components/ui/buttonComponent.vue'
 
@@ -87,7 +90,7 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
 </script>
 
 <template>
-  <main class="bg-background text-foregound w-full h-screen flex">
+  <main id="dashboard" class="bg-background text-foregound w-full h-screen flex">
     <Sidebar />
     <!-- Dashboard -->
     <div class="flex flex-col gap-3 flex-grow p-6 text-foreground dark:bg-foreground/5">
@@ -100,11 +103,18 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
           <Input id="search" placeholder="Search..." v-model="tableSearchValue" />
         </div>
         <!-- Add Item -->
-        <Button class="w-32" variant="dark"
-          ><div class="flex gap-2 items-center">
-            <span class="scale-150 -mt-1">+</span> New Item
-          </div>
-        </Button>
+        <SheetComponent>
+          <template #trigger>
+            <Button class="w-32" variant="dark"
+              ><div class="flex gap-2 items-center">
+                <span class="scale-150 -mt-1">+</span> New Item
+              </div>
+            </Button>
+          </template>
+          <template #content>
+            <NewInventoryItemForm />
+          </template>
+        </SheetComponent>
       </div>
 
       <!-- Table -->
@@ -150,22 +160,9 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
                     </Button>
                   </template>
                   <template #menu>
-                    <!-- Dropdown Content -->
-                    <div
-                      @click.prevent=""
-                      class="p-3 px-2 flex gap-3 cursor-pointer hover:bg-border/25"
-                    >
-                      <div>🖉</div>
-                      <div>Edit</div>
-                    </div>
+                    <DropdownMenuItem icon="🖉" label="Edit" />
                     <div class="h-0.5 w-full bg-border/25" />
-                    <div
-                      @click.prevent=""
-                      class="p-3 px-2 flex gap-3 cursor-pointer hover:bg-border/25"
-                    >
-                      <div>🗑️</div>
-                      <div>Delete</div>
-                    </div>
+                    <DropdownMenuItem icon="🗑️" label="Delete" />
                   </template>
                 </DropdownMenu>
               </td>
