@@ -3,7 +3,7 @@ import { computed, defineProps } from 'vue'
 
 const props = defineProps({
   variant: {
-    type: String as () => 'default' | 'destructive' | 'outline' | 'dark',
+    type: String as () => 'default' | 'destructive' | 'outline' | 'ghost' | 'dark',
     default: 'default'
   },
   class: {
@@ -25,7 +25,8 @@ const classes = computed(() => {
     default: 'bg-primary text-primary-foreground hover:bg-primary/90',
     dark: 'bg-foreground text-background hover:bg-foreground/90',
     destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-    outline: 'border border-border bg-background text-foreground hover:bg-background/90'
+    outline: 'border border-border bg-background text-foreground hover:bg-background/90',
+    ghost: 'bg-transparent text-foreground hover:bg-border/25'
   }
 
   return `${baseClasses} ${variantClasses[props.variant]} ${props.class}`
