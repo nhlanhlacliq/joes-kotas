@@ -8,6 +8,9 @@ export function timeAgo(date: string) {
   // const minsAgo = Math.floor(timeAgoInMs / (1000 * 60)) - inputDate.getTimezoneOffset()
   const minsAgo = Math.floor(timeAgoInMs / (1000 * 60))
   if (minsAgo < 60) {
+    if (minsAgo < 1) {
+      return 'Just now'
+    }
     return `${minsAgo} minute(s) ago`
   }
 
