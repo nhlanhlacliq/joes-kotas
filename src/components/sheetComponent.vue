@@ -5,8 +5,6 @@ const isVisible = ref(false)
 
 const sheet = ref<HTMLElement | null>(null)
 
-const dashboardRight = ref(document.getElementById('dashboard')?.getBoundingClientRect().right)
-
 function toggleSheet(event: MouseEvent) {
   event.stopPropagation()
   isVisible.value = !isVisible.value
