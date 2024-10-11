@@ -1,43 +1,52 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import Button from './ui/buttonComponent.vue'
+import Input from './ui/inputComponent.vue'
+import Label from './ui/labelComponent.vue'
+
+const props = defineProps<{
+  closeSheet: () => void
+}>()
+
+const name = ref('')
+const count = ref(0)
+const isAvailable = ref(false)
+</script>
 
 <template>
-  <form class="flex flex-col gap-4" @submit.prevent="">
+  <form class="flex flex-col gap-4 p-6 h-full" @submit.prevent="">
+    <!-- Header -->
     <div>
-      <h2 class="text-2xl font-semibold pb-2">Register</h2>
+      <h2 class="text-2xl font-semibold pb-2">New Food Item</h2>
       <p class="text-sm text-foreground/50 mb-4">
-        Enter your details below to create your account.
+        Enter the details below to create a new food item.
       </p>
     </div>
+
+    <!-- Inputs -->
     <div class="flex flex-col gap-4">
       <div>
-        <Label for="email">Email</Label>
-        <!-- <Input id="email" v-model="email" type="email" placeholder="m@example.com" required /> -->
+        <Label for="name">Name</Label>
+        <Input id="name" v-model="name" type="text" placeholder="Eggs" required />
       </div>
       <div>
-        <Label for="username">Username</Label>
-        <!-- <Input id="username" v-model="username" placeholder="Chef Cooks" required /> -->
+        <Label for="count">Inventory</Label>
+        <Input id="count" v-model="count" type="number" placeholder="0" min="0" required />
       </div>
-      <div>
-        <Label for="password">Password</Label>
-        <div class="relative">
-          <!-- <Input
-                id="password"
-                v-model="password"
-                :type="passwordShow ? 'text' : 'password'"
-                placeholder="Password"
-                minlength="8"
-                required
-              /> -->
-          <!-- <div
-                class="absolute right-2 bottom-0 hover:bg-border p-2 cursor-pointer"
-                @click="passwordShow = !passwordShow"
-              >
-                👁️
-              </div> -->
-        </div>
+      <div class="flex items-center gap-2 py-2">
+        <input
+          id="available"
+          v-model="isAvailable"
+          type="checkbox"
+          checked
+          class="rounded border-border/50 size-4 text-black"
+        />
+        <Label for="available" class="mb-0.5 text-md">Available?</Label>
       </div>
-      <Button class="w-full mt-4" type="submit"> Register </Button>
-      <!-- <Button class="w-full" variant="outline" @click="router.push('/')"> Cancel </Button> -->
+    </div>
+    <div class="flex flex-grow flex-col gap-4 justify-end">
+      <Button class="w-full mt-4" type="submit" variant="dark"> Create </Button>
+      <Button class="w-full" variant="outline" @click="props.closeSheet"> Cancel </Button>
     </div>
   </form>
 </template>
