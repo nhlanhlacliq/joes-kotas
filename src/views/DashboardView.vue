@@ -1,10 +1,11 @@
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
 import {
   createInventoryItem,
   deleteInventoryItem,
   fetchInventory as fetchInventoryService,
   updateInventoryItem
-} from '@/services/inventory-service'
+} from '@/services/inventory'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -27,9 +28,10 @@ async function fetchInventory() {
 
 function handleAddItem() {
   try {
+    //TODO:
     const item = {
       name: 'Apple',
-      available: true,
+      isAvailable: true,
       count: 1
     }
     createInventoryItem(item)
@@ -39,7 +41,7 @@ function handleAddItem() {
     alert(error)
   }
 }
-
+// @ts-expect-error TODO: handle type
 function handleUpdateItem(id: number, item) {
   // TODO:
   updateInventoryItem(id, item)
@@ -62,7 +64,7 @@ function handleLogout() {
 
 onMounted(async () => {
   const response = await fetchInventory()
-  // @ts-expect-error
+  // @ts-expect-error TODO: handle data type
   inventory.value = response?.data
 })
 </script>

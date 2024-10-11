@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MainContainer from '@/components/mainContainer.vue'
-import Button from '@/components/ui/buttonComponent.vue' // Using the simplified Button component
+import Button from '@/components/ui/buttonComponent.vue'
 import Card from '@/components/ui/cardComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
@@ -28,7 +28,9 @@ async function handleRegister() {
     router.push('/dashboard')
   } catch (error) {
     console.error('Registration failed:', error)
+    //@ts-expect-error TODO: handle type
     if (error.response && error.response.data && error.response.data.error) {
+      //@ts-expect-error
       errorMessage.value = error.response.data.error
     } else {
       errorMessage.value = 'An error occurred during registration.'
@@ -83,7 +85,3 @@ async function handleRegister() {
     </Card>
   </MainContainer>
 </template>
-
-<style scoped>
-/* Add any component-specific styles here if needed */
-</style>
