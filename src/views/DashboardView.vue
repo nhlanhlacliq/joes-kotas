@@ -14,6 +14,8 @@ import {
 import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import DropdownMenu from '../components/dropdownMenu.vue'
+import Sidebar from '../components/sideBar.vue'
 import Button from '../components/ui/buttonComponent.vue'
 
 const authStore = useAuthStore()
@@ -24,6 +26,8 @@ const isFetching = ref(true)
 
 const filteredInventory = ref<InventoryItemSchema[]>([])
 const tableSearchValue = ref('')
+
+const table = ref<HTMLElement | null>(null)
 
 async function fetchInventory() {
   try {
@@ -68,11 +72,6 @@ function handleDeleteItem(id: number) {
   }
 }
 
-function handleLogout() {
-  authStore.logout()
-  router.push('/')
-}
-
 onMounted(async () => {
   await fetchInventory()
   filteredInventory.value = inventory.value
@@ -89,21 +88,7 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
 
 <template>
   <main class="bg-background text-foregound w-full h-screen flex">
-    <!-- Sidebar -->
-    <div
-      class="flex flex-col justify-between w-full bg-foreground dark:bg-foreground/10 text-background dark:text-foreground max-w-56 p-6"
-    >
-      <div class="space-y-6">
-        <h2 class="text-2xl font-bold">🍞 Joes Kotas</h2>
-        <p class="">Hello, {name}</p>
-        <p class="opacity-50">
-          lorem ipsum etae et dolor sit amet consectetur adipiscing elit sed do eiusmod tempor
-          incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-        </p>
-      </div>
-      <Button @click="handleLogout"> 🚪 Logout </Button>
-    </div>
+    <Sidebar />
     <!-- Dashboard -->
     <div class="flex flex-col gap-3 flex-grow p-6 text-foreground dark:bg-foreground/5">
       <h1 class="text-2xl font-bold border-b border-border/50 pb-3">Dashboard</h1>
@@ -123,8 +108,12 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
       </div>
 
       <!-- Table -->
-      <div class="py-3 overflow-y-scroll">
-        <LoadingComponent v-if="isFetching" class="text-center opacity-50" />
+      <div ref="table" class="py-3 overflow-y-scroll">
+        <LoadingComponent
+          v-if="isFetching"
+          class="opacity-50"
+          :style="{ paddingLeft: (table?.offsetWidth ? table.offsetWidth / 2 - 20 : 1) + 'px' }"
+        />
         <p v-else-if="filteredInventory && filteredInventory.length === 0" class="text-center">
           No food items found.
         </p>
@@ -152,8 +141,33 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
                 {{ timeAgo(item.updatedAt) }}
               </td>
               <td class="px-4 py-2 flex gap-4 justify-end">
-                <Button>Edit</Button>
-                <Button variant="outline">🗑️</Button>
+                <DropdownMenu>
+                  <template #trigger>
+                    <Button variant="ghost"
+                      ><div class="flex items-center justify-center -translate-y-[18%] text-2xl">
+                        ...
+                      </div>
+                    </Button>
+                  </template>
+                  <template #menu>
+                    <!-- Dropdown Content -->
+                    <div
+                      @click.prevent=""
+                      class="p-3 px-2 flex gap-3 cursor-pointer hover:bg-border/25"
+                    >
+                      <div>🖉</div>
+                      <div>Edit</div>
+                    </div>
+                    <div class="h-0.5 w-full bg-border/25" />
+                    <div
+                      @click.prevent=""
+                      class="p-3 px-2 flex gap-3 cursor-pointer hover:bg-border/25"
+                    >
+                      <div>🗑️</div>
+                      <div>Delete</div>
+                    </div>
+                  </template>
+                </DropdownMenu>
               </td>
             </tr>
           </tbody>
