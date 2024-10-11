@@ -4,9 +4,7 @@ import Button from './ui/buttonComponent.vue'
 import Input from './ui/inputComponent.vue'
 import Label from './ui/labelComponent.vue'
 
-const props = defineProps<{
-  closeSheet: () => void
-}>()
+const emit = defineEmits(['closeSheet'])
 
 const name = ref('')
 const count = ref(0)
@@ -46,7 +44,7 @@ const isAvailable = ref(false)
     </div>
     <div class="flex flex-grow flex-col gap-4 justify-end">
       <Button class="w-full mt-4" type="submit" variant="dark"> Create </Button>
-      <Button class="w-full" variant="outline" @click="props.closeSheet"> Cancel </Button>
+      <Button class="w-full" variant="outline" @click="emit('closeSheet')"> Cancel </Button>
     </div>
   </form>
 </template>
