@@ -14,6 +14,6 @@ app.use(router)
 
 app.mount('#app')
 
-// Initialize auth store - check for token in localStorage
+// Check for existing token in localStorage
 const authStore = useAuthStore()
 authStore.initialize()
