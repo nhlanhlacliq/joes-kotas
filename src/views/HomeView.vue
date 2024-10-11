@@ -12,7 +12,7 @@ import ButtonComponent from '../components/ui/buttonComponent.vue'
       </p>
       <div class="flex gap-6 justify-center">
         <router-link to="/register">
-          <ButtonComponent variant="outline" class="w-32"> Sign up </ButtonComponent>
+          <ButtonComponent variant="outline" class="w-32"> Register </ButtonComponent>
         </router-link>
         <router-link to="/login">
           <ButtonComponent class="w-32"> Login </ButtonComponent>
