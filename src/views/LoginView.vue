@@ -4,9 +4,11 @@ import Button from '@/components/ui/buttonComponent.vue' // Using the simplified
 import Card from '@/components/ui/cardComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
+import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+const authStore = useAuthStore()
 const router = useRouter()
 
 const passwordShow = ref(false)
@@ -14,9 +16,17 @@ const passwordShow = ref(false)
 const email = ref('')
 const password = ref('')
 
-function handleLogin() {
+async function handleLogin() {
   console.log('Email:', email.value)
   console.log('Password:', password.value)
+
+  try {
+    await authStore.login({ email: email.value, password: password.value })
+    router.push('/dashboard')
+  } catch (error) {
+    console.error(error)
+    alert(error)
+  }
 }
 </script>
 
@@ -54,7 +64,7 @@ function handleLogin() {
               </div>
             </div>
           </div>
-          <Button class="w-full mt-4" type="submit"> Sign in </Button>
+          <Button class="w-full mt-4" type="submit"> Login </Button>
           <Button class="w-full" variant="outline" @click="router.push('/')"> Cancel </Button>
         </div>
       </form>
