@@ -10,8 +10,10 @@
 - [x] set up user auth state/store w pinia
 - [x] setup axios (w/ interceptors) ([docs](https://axios-http.com/docs/interceptors))
 - [ ] handle errors
-- [ ] fetch user endpoint
-- [ ] type schemas for api calls
+- [ ] bonus: fetch current user endpoint
+- [ ] bonus: fetch all users
+- [ ] bonus: update / endpoint on server to redirect to /reference
+- [x] type schemas for api calls
 - [x] set up register and login with api
 - [ ]
 
