@@ -7,12 +7,16 @@ const darkModeStore = useDarkModeStore()
 </script>
 
 <template>
-  <RouterView v-slot="{ Component }">
-    <transition :name="darkModeStore.isDarkMode ? 'slide' : 'dark'" mode="out-in">
-      <component :is="Component" />
-    </transition>
-  </RouterView>
-  <DarkModeToggle />
+  <div class="bg-background">
+    <main class="max-w-screen-xl mx-auto bg-background border-x border-border">
+      <RouterView v-slot="{ Component }">
+        <transition :name="darkModeStore.isDarkMode ? 'slide' : 'dark'" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </RouterView>
+      <DarkModeToggle />
+    </main>
+  </div>
 </template>
 
 <style></style>
