@@ -9,8 +9,8 @@ setInterval(() => {
 </script>
 
 <template>
-  <p v-if="count === 1" class="opacity-85 -translate-x-[0px]">Loading</p>
-  <p v-else-if="count === 2" class="translate-y-[0px]">Loading.</p>
-  <p v-else-if="count === 3" class="opacity-85 translate-x-[1px]">Loading..</p>
-  <p v-else-if="count === 4" class="-translate-y-[1px]">Loading...</p>
+  <p v-if="count === 1" class="opacity-85">Loading</p>
+  <p v-else-if="count === 2" class="">Loading.</p>
+  <p v-else-if="count === 3" class="opacity-85">Loading..</p>
+  <p v-else-if="count === 4" class="">Loading...</p>
 </template>
