@@ -29,6 +29,9 @@ instance.interceptors.response.use(
       router.push('/')
     } else if (error.response && error.response.status === 403) {
       alert('You do not have permission to perform this action.')
+    } else if (error.message === 'Network Error' && error.name === 'AxoisError') {
+      console.log('Axios Network Error?', error)
+      router.push('/')
     }
     return Promise.reject(error)
   }
