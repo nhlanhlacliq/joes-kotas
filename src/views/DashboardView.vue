@@ -1,5 +1,6 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 <script setup lang="ts">
+import EditInventoryItemForm from '@/components/editInventoryItemForm.vue'
 import LoadingComponent from '@/components/loadingComponent.vue'
 import NewInventoryItemForm from '@/components/newInventoryItemForm.vue'
 import SheetComponent from '@/components/sheetComponent.vue'
@@ -10,10 +11,10 @@ import type { InventoryItemSchema } from '@/schemas/inventory'
 import {
   createInventoryItem,
   deleteInventoryItem,
-  fetchInventory as fetchInventoryService,
-  updateInventoryItem
+  fetchInventory as fetchInventoryService
 } from '@/services/inventory'
 import { useAuthStore } from '@/stores/auth'
+import { useInventoryStore } from '@/stores/inventory'
 import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import DropdownMenu from '../components/dropdownMenu.vue'
@@ -23,6 +24,7 @@ import Button from '../components/ui/buttonComponent.vue'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const inventoryStore = useInventoryStore()
 
 const inventory = ref<InventoryItemSchema[]>([])
 const isFetching = ref(true)
@@ -32,11 +34,22 @@ const tableSearchValue = ref('')
 
 const table = ref<HTMLElement | null>(null)
 
+const isCreateSheetVisible = ref(false)
+function closeCreateSheet() {
+  isCreateSheetVisible.value = false
+}
+
+const isEditSheetVisible = ref(false)
+function closeEditSheet() {
+  isEditSheetVisible.value = false
+}
+
 async function fetchInventory() {
   try {
     isFetching.value = true
     const response = await fetchInventoryService()
     inventory.value = response.data
+    filteredInventory.value = inventory.value
     isFetching.value = false
   } catch (error) {
     console.error(error)
@@ -58,11 +71,6 @@ function handleAddItem() {
     console.error(error)
     alert(error)
   }
-}
-// @ts-expect-error TODO: handle type
-function handleUpdateItem(id: number, item) {
-  // TODO:
-  updateInventoryItem(id, item)
 }
 
 function handleDeleteItem(id: number) {
@@ -102,8 +110,8 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
           <Label for="search" class="scale-150">🔍</Label>
           <Input id="search" placeholder="Search..." v-model="tableSearchValue" />
         </div>
-        <!-- Add Item -->
-        <SheetComponent>
+        <!-- Add Item form-->
+        <SheetComponent v-model:isVisible="isCreateSheetVisible">
           <template #trigger>
             <Button class="w-32" variant="dark"
               ><div class="flex gap-2 items-center">
@@ -112,7 +120,7 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
             </Button>
           </template>
           <template #content>
-            <NewInventoryItemForm />
+            <NewInventoryItemForm @closeSheet="closeCreateSheet" />
           </template>
         </SheetComponent>
       </div>
@@ -160,7 +168,21 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
                     </Button>
                   </template>
                   <template #menu>
-                    <DropdownMenuItem icon="🖉" label="Edit" />
+                    <SheetComponent v-model:isVisible="isEditSheetVisible">
+                      <template #trigger>
+                        <DropdownMenuItem
+                          icon="🖉"
+                          label="Edit"
+                          @click="inventoryStore.setSelectedInventoryItem(item)"
+                        />
+                      </template>
+                      <template #content>
+                        <EditInventoryItemForm
+                          @closeSheet="closeEditSheet"
+                          @dataUpdated="fetchInventory"
+                        />
+                      </template>
+                    </SheetComponent>
                     <div class="h-0.5 w-full bg-border/25" />
                     <DropdownMenuItem icon="🗑️" label="Delete" />
                   </template>
