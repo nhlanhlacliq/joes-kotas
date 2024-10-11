@@ -3,17 +3,17 @@
 ## TODO
 
 - [x] Setup TailwindCSS and color variables
-- [x] setup dark mode
+- [x] setup dark mode (manage state w/ pinia)
 - [x] Deploy to vercel.
-- [x] set up register and login routes and views
-- [ ] set up register and login with api
-- [ ] **Scaffold basic UI with mock data**:
-  - Use Vue 3 Composition API and TailwindCSS to design a basic interface for managing food items.
-  - Set up state management with Pinia.
-    -- [ ] **Set up frontend routing**:
-  - Use Vue Router to manage different pages (login, register, dashboard).
-- [ ] **Attach frontend to backend API**:
-  - Connect frontend to backend API (CRUD operations for food items)
+- [x] set up register and login routes and views (w/ vue router)
+- [x] basic form validation ~~(or enhance with zod?)~~
+- [x] set up user auth state/store w pinia
+- [x] setup axios (w/ interceptors) ([docs](https://axios-http.com/docs/interceptors))
+- [ ] handle errors
+- [ ] fetch user endpoint
+- [ ] type schemas for api calls
+- [x] set up register and login with api
+- [ ]
 
 ---
 
