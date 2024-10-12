@@ -22,9 +22,9 @@ const classes = computed(() => {
     'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2'
 
   const variantClasses = {
-    default: 'bg-primary text-foreground hover:bg-primary/90',
+    default: 'bg-primary text-foreground dark:text-background hover:bg-primary/90',
     dark: 'bg-foreground text-background hover:bg-foreground/90',
-    destructive: 'bg-destructive text-background hover:bg-destructive/90',
+    destructive: 'bg-destructive text-background dark:text-foreground hover:bg-destructive/90',
     outline: 'border border-border bg-background text-foreground hover:bg-background/90',
     ghost: 'bg-transparent text-foreground hover:bg-border/25'
   }
