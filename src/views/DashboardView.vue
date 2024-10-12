@@ -6,13 +6,9 @@ import NewInventoryItemForm from '@/components/newInventoryItemForm.vue'
 import SheetComponent from '@/components/sheetComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
-import { timeAgo } from '@/lib/utils'
+import { dateSort, stringSort, timeAgo } from '@/lib/utils'
 import type { InventoryItemSchema } from '@/schemas/inventory'
-import {
-  createInventoryItem,
-  deleteInventoryItem,
-  fetchInventory as fetchInventoryService
-} from '@/services/inventory'
+import { deleteInventoryItem, fetchInventory as fetchInventoryService } from '@/services/inventory'
 import { useAuthStore } from '@/stores/auth'
 import { useInventoryStore } from '@/stores/inventory'
 import { onMounted, ref, watch } from 'vue'
@@ -57,29 +53,15 @@ async function fetchInventory() {
   }
 }
 
-function handleAddItem() {
-  try {
-    //TODO:
-    const item = {
-      name: 'Apple',
-      isAvailable: true,
-      count: 1
-    }
-    createInventoryItem(item)
-    fetchInventory()
-  } catch (error) {
-    console.error(error)
-    alert(error)
-  }
-}
-
 function handleDeleteItem(id: number) {
-  try {
-    deleteInventoryItem(id)
-    fetchInventory()
-  } catch (error) {
-    console.error(error)
-    alert(error)
+  if (confirm('Are you sure you want to delete this item?')) {
+    try {
+      deleteInventoryItem(id)
+      fetchInventory()
+    } catch (error) {
+      console.error(error)
+      alert(error)
+    }
   }
 }
 
@@ -94,11 +76,73 @@ watch(tableSearchValue, () => {
   )
 })
 
-const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', '']
+const sortBy = ref<string | number>('id')
+const sortDescending = ref(false)
+
+function handleSort(key: string | number) {
+  if (key === sortBy.value) {
+    sortDescending.value = !sortDescending.value
+  } else {
+    sortBy.value = key
+    sortDescending.value = false
+  }
+  filteredInventory.value = filteredInventory.value.sort((a, b) => {
+    if (sortDescending.value) {
+      return key === 'name'
+        ? stringSort(b[key], a[key])
+        : key === 'updatedAt'
+          ? dateSort(b[key], a[key])
+          : // @ts-expect-error
+            b[key] - a[key]
+    }
+    return key === 'name'
+      ? stringSort(a[key], b[key])
+      : key === 'updatedAt'
+        ? dateSort(a[key], b[key])
+        : // @ts-expect-error
+          a[key] - b[key]
+  })
+}
+
+const tableColumns = [
+  {
+    label: 'ID',
+    key: 'id',
+    sortable: true
+  },
+  {
+    label: 'Name',
+    key: 'name',
+    sortable: true
+  },
+  {
+    label: 'Inventory',
+    key: 'count',
+    sortable: true
+  },
+  {
+    label: 'Available',
+    key: 'isAvailable',
+    sortable: true
+  },
+  {
+    label: 'Last Updated',
+    key: 'updatedAt',
+    sortable: true
+  },
+  {
+    label: '',
+    key: 'actions',
+    sortable: false
+  }
+]
 </script>
 
 <template>
-  <main id="dashboard" class="bg-background text-foregound w-full h-screen flex">
+  <main
+    id="dashboard"
+    class="bg-background text-foregound w-full h-screen flex border-x border-border"
+  >
     <Sidebar />
     <!-- Dashboard -->
     <div class="flex flex-col gap-3 flex-grow p-6 text-foreground dark:bg-foreground/5">
@@ -120,13 +164,13 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
             </Button>
           </template>
           <template #content>
-            <NewInventoryItemForm @closeSheet="closeCreateSheet" />
+            <NewInventoryItemForm @closeSheet="closeCreateSheet" @data-created="fetchInventory" />
           </template>
         </SheetComponent>
       </div>
 
       <!-- Table -->
-      <div ref="table" class="py-3 overflow-y-scroll">
+      <div ref="table" class="overflow-y-scroll my-3">
         <LoadingComponent
           v-if="isFetching"
           class="opacity-50"
@@ -136,14 +180,24 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
           No food items found.
         </p>
         <table v-else class="min-w-full table-auto rounded-lg divide-y divide-border/50">
-          <thead>
+          <thead class="sticky top-0 z-10 bg-foreground/15 text-foreground backdrop-blur-lg">
             <tr>
               <th
                 v-for="column in tableColumns"
-                :key="column"
-                class="px-4 py-2 text-left opacity-50 font-normal"
+                :key="column.key"
+                :class="{ 'cursor-pointer': column.sortable }"
+                @click="column.sortable && handleSort(column.key)"
+                class="text-left opacity-50 font-normal"
               >
-                {{ column }}
+                <div class="flex items-center gap-4 hover:bg-foreground/5 py-3 px-4 select-none">
+                  {{ column.label }}
+                  <div v-if="column.key === sortBy">
+                    <transition name="rotate" mode="out-in">
+                      <div v-if="sortDescending" class="rotate-0 font-bold">↑</div>
+                      <div v-else class="rotate-180 font-bold">↑</div>
+                    </transition>
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
@@ -184,14 +238,32 @@ const tableColumns = ['ID', 'Name', 'Inventory', 'Available', 'Last Updated', ''
                       </template>
                     </SheetComponent>
                     <div class="h-0.5 w-full bg-border/25" />
-                    <DropdownMenuItem icon="🗑️" label="Delete" />
+                    <DropdownMenuItem icon="🗑️" label="Delete" @click="handleDeleteItem(item.id)" />
                   </template>
                 </DropdownMenu>
               </td>
             </tr>
           </tbody>
         </table>
+        <p
+          v-if="!isFetching && filteredInventory && filteredInventory.length >= 1"
+          class="p-3 px-4 opacity-50"
+        >
+          {{ filteredInventory.length }} items.
+        </p>
       </div>
     </div>
   </main>
 </template>
+
+<style scoped>
+.rotate-enter-active,
+.rotate-leave-active {
+  transition: transform 100ms ease-in-out;
+}
+
+.rotate-enter-from,
+.rotate-leave-to {
+  transform: rotate(180deg);
+}
+</style>
