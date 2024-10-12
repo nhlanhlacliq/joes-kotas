@@ -33,7 +33,7 @@
 .slide-enter-from,
 .slide-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(12px);
 }
 
 .slide-enter-active,
@@ -43,10 +43,10 @@
 
 .dark-enter-from,
 .dark-leave-to {
-  /* opacity: 0; */
+  opacity: 0;
   background-color: black;
-  transform: scale(1.03);
-  filter: blur(10px);
+  /* transform: scale(1.03); */
+  filter: blur(1px);
   overflow: hidden;
 }
 
