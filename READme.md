@@ -11,10 +11,11 @@
 - [x] setup axios (w/ interceptors) ([docs](https://axios-http.com/docs/interceptors))
 - [x] handle errors
 - [x] handle network error response on dashboard when token expired
-- [ ] bonus: fetch current user endpoint
+- [x] bonus: fetch current user endpoint
 - [ ] bonus: fetch all users
-- [ ] bonus: update / endpoint on server to redirect to /reference
+- [x] bonus: update / endpoint on server to redirect to /reference (done in writing)
 - [ ] bonus: fetch items only created by current user - create user roles - admin role that fetches all
+- [ ] bonus: or add updated by field to inventory item schema
 - [x] type schemas for api calls (zod)
 - [x] implement register and login with api
 - [x] implement inventory fetch and display
