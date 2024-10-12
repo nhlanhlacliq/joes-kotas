@@ -32,3 +32,17 @@ export function timeAgo(date: string) {
   // Otherwise, return the formatted date (e.g., "MM/DD/YYYY")
   return inputDate.toDateString()
 }
+
+// Sort function for strings
+export function stringSort(a: string, b: string) {
+  if (a.toLowerCase() < b.toLowerCase()) return -1
+  if (a.toLowerCase() > b.toLowerCase()) return 1
+  return 0
+}
+
+// Sort function for dates
+export function dateSort(a: string, b: string) {
+  if (new Date(a).getTime() < new Date(b).getTime()) return 1
+  if (new Date(a).getTime() > new Date(b).getTime()) return -1
+  return 0
+}
