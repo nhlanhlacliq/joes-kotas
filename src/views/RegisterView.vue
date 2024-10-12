@@ -78,7 +78,9 @@ async function handleRegister() {
             </div>
           </div>
           <Button class="w-full mt-4" type="submit"> Register </Button>
-          <Button class="w-full" variant="outline" @click="router.push('/')"> Cancel </Button>
+          <Button class="w-full" type="button" variant="outline" @click="router.push('/')">
+            Cancel
+          </Button>
         </div>
       </form>
       <div v-if="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</div>
