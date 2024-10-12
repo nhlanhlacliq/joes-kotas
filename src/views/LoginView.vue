@@ -17,9 +17,6 @@ const email = ref('')
 const password = ref('')
 
 async function handleLogin() {
-  console.log('Email:', email.value)
-  console.log('Password:', password.value)
-
   try {
     await authStore.login({ email: email.value, password: password.value })
     router.push('/dashboard')
@@ -65,7 +62,9 @@ async function handleLogin() {
             </div>
           </div>
           <Button class="w-full mt-4" type="submit"> Login </Button>
-          <Button class="w-full" variant="outline" @click="router.push('/')"> Cancel </Button>
+          <Button class="w-full" type="button" variant="outline" @click="router.push('/')">
+            Cancel
+          </Button>
         </div>
       </form>
     </Card>
