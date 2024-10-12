@@ -145,10 +145,10 @@ const tableColumns = [
   >
     <Sidebar />
     <!-- Dashboard -->
-    <div class="flex flex-col gap-3 flex-grow p-6 text-foreground dark:bg-foreground/5">
-      <h1 class="text-2xl font-bold border-b border-border/50 pb-3">Dashboard</h1>
+    <div class="flex flex-col gap-4 flex-grow p-6 text-foreground dark:bg-foreground/5">
+      <h1 class="text-2xl font-bold border-b border-border/50 pb-6">Dashboard</h1>
       <h2 class="text-xl font-semibold">Inventory</h2>
-      <div class="flex justify-end items-center gap-6">
+      <div class="flex justify-end items-center gap-4">
         <!-- Search -->
         <div class="w-72 flex gap-4 items-center">
           <Label for="search" class="scale-150">🔍</Label>
