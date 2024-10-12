@@ -8,7 +8,7 @@ const darkModeStore = useDarkModeStore()
 
 <template>
   <div class="bg-background">
-    <main class="max-w-screen-xl mx-auto bg-background border-x border-border">
+    <main class="max-w-screen-xl mx-auto bg-background">
       <RouterView v-slot="{ Component }">
         <transition :name="darkModeStore.isDarkMode ? 'slide' : 'dark'" mode="out-in">
           <component :is="Component" />
