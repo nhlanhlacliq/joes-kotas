@@ -1,18 +1,40 @@
 <script setup lang="ts">
+import { createInventoryItem } from '@/services/inventory'
 import { ref } from 'vue'
 import Button from './ui/buttonComponent.vue'
 import Input from './ui/inputComponent.vue'
 import Label from './ui/labelComponent.vue'
 
-const emit = defineEmits(['closeSheet'])
+const emit = defineEmits(['closeSheet', 'dataCreated'])
+
+const isPending = ref()
 
 const name = ref('')
 const count = ref(0)
 const isAvailable = ref(false)
+
+async function handleSubmit() {
+  const body = {
+    name: name.value,
+    count: count.value,
+    isAvailable: isAvailable.value
+  }
+
+  try {
+    isPending.value = true
+    createInventoryItem(body)
+    emit('dataCreated')
+    isPending.value = false
+    emit('closeSheet')
+  } catch (error) {
+    console.error(error)
+    alert(error)
+  }
+}
 </script>
 
 <template>
-  <form class="flex flex-col gap-4 p-6 h-full" @submit.prevent="">
+  <form class="flex flex-col gap-4 p-6 h-full" @submit.prevent="handleSubmit">
     <!-- Header -->
     <div>
       <h2 class="text-2xl font-semibold pb-2">New Food Item</h2>
@@ -43,8 +65,18 @@ const isAvailable = ref(false)
       </div>
     </div>
     <div class="flex flex-grow flex-col gap-4 justify-end">
-      <Button class="w-full mt-4" type="submit" variant="dark"> Create </Button>
-      <Button class="w-full" variant="outline" @click="emit('closeSheet')"> Cancel </Button>
+      <Button class="w-full mt-4" type="submit" variant="dark" :disabled="isPending">
+        Create
+      </Button>
+      <Button
+        class="w-full"
+        type="button"
+        variant="outline"
+        @click="emit('closeSheet')"
+        :disabled="isPending"
+      >
+        Cancel
+      </Button>
     </div>
   </form>
 </template>
