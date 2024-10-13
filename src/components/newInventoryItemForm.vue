@@ -15,7 +15,7 @@ const isAvailable = ref(false)
 
 async function handleSubmit() {
   const body = {
-    name: name.value,
+    name: name.value.trim(),
     count: count.value,
     isAvailable: isAvailable.value
   }
