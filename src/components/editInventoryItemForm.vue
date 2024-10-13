@@ -25,11 +25,12 @@ async function handleSubmit() {
     isPending.value = true
     await updateInventoryItem(id, body)
     emit('dataUpdated')
-    isPending.value = false
-    emit('closeSheet')
   } catch (error) {
     console.error(error)
     alert(error)
+  } finally {
+    isPending.value = false
+    emit('closeSheet')
   }
 }
 </script>
