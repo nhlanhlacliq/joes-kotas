@@ -4,8 +4,9 @@ import Button from '@/components/ui/buttonComponent.vue'
 import Card from '@/components/ui/cardComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
+import { parseZodError } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
@@ -15,6 +16,7 @@ const passwordShow = ref(false)
 
 const email = ref('')
 const password = ref('')
+const errorMessage = ref('')
 
 async function handleLogin() {
   try {
@@ -22,9 +24,15 @@ async function handleLogin() {
     router.push('/dashboard')
   } catch (error) {
     console.error(error)
-    alert(error)
+    errorMessage.value = parseZodError(error, 'An error occured during Login')
   }
 }
+
+// Clear error message after 3 seconds
+watch(
+  () => errorMessage.value,
+  () => setTimeout(() => (errorMessage.value = ''), 3000)
+)
 </script>
 
 <template>
@@ -67,6 +75,7 @@ async function handleLogin() {
           </Button>
         </div>
       </form>
+      <div v-if="errorMessage" class="text-red-500 text-sm">{{ errorMessage }}</div>
     </Card>
   </MainContainer>
 </template>

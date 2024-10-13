@@ -44,7 +44,7 @@ async function fetchInventory() {
   try {
     isFetching.value = true
     const response = await fetchInventoryService()
-    inventory.value = response.data
+    inventory.value = response?.data!
     filteredInventory.value = inventory.value
     isFetching.value = false
   } catch (error) {

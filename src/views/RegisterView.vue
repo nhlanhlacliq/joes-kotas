@@ -4,8 +4,9 @@ import Button from '@/components/ui/buttonComponent.vue'
 import Card from '@/components/ui/cardComponent.vue'
 import Input from '@/components/ui/inputComponent.vue'
 import Label from '@/components/ui/labelComponent.vue'
+import { parseZodError } from '@/lib/utils'
 import { useAuthStore } from '@/stores/auth'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -28,15 +29,15 @@ async function handleRegister() {
     router.push('/dashboard')
   } catch (error) {
     console.error('Registration failed:', error)
-    //@ts-expect-error TODO: handle type
-    if (error.response && error.response.data && error.response.data.error) {
-      //@ts-expect-error
-      errorMessage.value = error.response.data.error
-    } else {
-      errorMessage.value = 'An error occurred during registration.'
-    }
+    errorMessage.value = parseZodError(error, 'An error occured during registration')
   }
 }
+
+// Clear error message after 3 seconds
+watch(
+  () => errorMessage.value,
+  () => setTimeout(() => (errorMessage.value = ''), 3000)
+)
 </script>
 
 <template>
