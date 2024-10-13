@@ -54,6 +54,10 @@ export const parseZodError = (error: ZodError | unknown, alternateMessage: strin
   if (error.response.data.error.name === 'ZodError') {
     // @ts-expect-error
     return error.response.data.error.issues[0].message
+    //@ts-expect-error
+  } else if (typeof error.response.data.error === 'string') {
+    //@ts-expect-error
+    return error.response.data.error
   } else {
     return alternateMessage || 'An error occurred.'
   }
