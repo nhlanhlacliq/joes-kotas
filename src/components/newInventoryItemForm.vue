@@ -24,11 +24,12 @@ async function handleSubmit() {
     isPending.value = true
     createInventoryItem(body)
     emit('dataCreated')
-    isPending.value = false
-    emit('closeSheet')
   } catch (error) {
     console.error(error)
     alert(error)
+  } finally {
+    emit('closeSheet')
+    isPending.value = false
   }
 }
 </script>
