@@ -1,3 +1,5 @@
+import type { ZodError } from 'zod'
+
 // Returns a string representing how long ago the input date was.
 export function timeAgo(date: string) {
   if (!date) return
@@ -45,4 +47,14 @@ export function dateSort(a: string, b: string) {
   if (new Date(a).getTime() < new Date(b).getTime()) return 1
   if (new Date(a).getTime() > new Date(b).getTime()) return -1
   return 0
+}
+
+export const parseZodError = (error: ZodError | unknown, alternateMessage: string) => {
+  // @ts-expect-error
+  if (error.response.data.error.name === 'ZodError') {
+    // @ts-expect-error
+    return error.response.data.error.issues[0].message
+  } else {
+    return alternateMessage || 'An error occurred.'
+  }
 }
