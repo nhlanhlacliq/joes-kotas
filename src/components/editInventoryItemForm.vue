@@ -19,7 +19,7 @@ const isAvailable = ref(inventoryItem?.isAvailable)
 
 async function handleSubmit() {
   const id = inventoryItem?.id!
-  const body = { name: name.value!, count: count.value!, isAvailable: isAvailable.value! }
+  const body = { name: name.value?.trim()!, count: count.value!, isAvailable: isAvailable.value! }
 
   try {
     isPending.value = true
